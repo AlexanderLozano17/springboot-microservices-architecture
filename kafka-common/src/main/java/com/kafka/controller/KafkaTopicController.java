@@ -67,5 +67,6 @@ public class KafkaTopicController {
 		logger.info("✓ SUCCESS  | " + getClass().getName() +"::getAllTopics()");
 		return ResponseEntity.ok(listTopics);		
 	}
-		
+	
+	
 }
