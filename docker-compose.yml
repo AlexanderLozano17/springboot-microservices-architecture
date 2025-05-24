@@ -46,7 +46,7 @@ services:
       - "8080:8080"  # Puerto para acceder a la interfaz web
     environment:
       KAFKA_CLUSTERS_0_NAME: local  # Nombre del cluster en la interfaz
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092,kafka2:9093  # Direccion de los broker de Kafka
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092  # Direccion de los broker de Kafka
     networks:
       - microservices
     volumes:

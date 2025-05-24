@@ -9,6 +9,7 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092,localhost:9093
+
     producer:
       retries: 5
       batch-size: 4096
