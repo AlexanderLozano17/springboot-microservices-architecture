@@ -1,0 +1,21 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: kafka-common-service
+
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9093
+    producer:
+      retries: 5
+      batch-size: 4096
+      buffer-memory: 1048576
+      linger-ms: 1
+      acks: all
+      enable-idempotence: true
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+

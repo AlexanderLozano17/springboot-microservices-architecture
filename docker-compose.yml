@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+     - microservices
+    volumes:
+      - zookeeper:/confluentinc/zookeeper  # Persistencia de datos de Zookeeper
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    ports:
+      - "9092:9092"        # Puerto externo para clientes (como Spring Boot)
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+      # Listeners internos (para otros contenedores) y externos (para tu host)
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+
+      # Opcional: desactiva la creación automática de topics
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+    depends_on:
+      - zookeeper
+    networks:
+     - microservices
+    volumes:
+      - kafka_data:/confluentinc/kafka
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    restart: always
+    ports:
+      - "8080:8080"  # Puerto para acceder a la interfaz web
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local  # Nombre del cluster en la interfaz
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092,kafka2:9093  # Direccion de los broker de Kafka
+    networks:
+      - microservices
+    volumes:
+      - kafka-ui-data:/config  # Persistencia de la configuracion de la interfaz
+
+networks:
+  microservices:
+    driver: bridge  
+
+volumes:
+  zookeeper:
+  kafka_data:
+  kafka-ui-data:
