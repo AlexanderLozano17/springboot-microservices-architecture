@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafka.events.SagaEvent;
 import com.kafka.service.KafkaEventProducerService;
 import com.kafka.service.KafkaTopicService;
 
@@ -67,6 +68,5 @@ public class KafkaTopicController {
 		logger.info("✓ SUCCESS  | " + getClass().getName() +"::getAllTopics()");
 		return ResponseEntity.ok(listTopics);		
 	}
-	
 	
 }
