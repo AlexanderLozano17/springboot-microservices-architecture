@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.kafka.events.SagaEvent;
+import com.kafka.saga.BaseEventData;
+import com.kafka.utils.FunctionUtils;
 
 @Service
 public class KafkaEventProducerService {
@@ -25,11 +26,12 @@ public class KafkaEventProducerService {
 	 * @param topic nombre del topic Kafka
 	 * @param sagaEvent el mensaje a enviar
 	 */
-	public void sendMessage(String topic, SagaEvent sagaEvent) {
+	public void sendMessage(String topic, BaseEventData event) {
 		logger.info("→ START | " + getClass().getName() +"::sendMessage()");
 		
-		try {			
-            kafkaTemplate.send(topic, sagaEvent).get(); // Bloqueante
+		try {	
+			FunctionUtils.printJsonPretty(event);
+            kafkaTemplate.send(topic, event).get(); // Bloqueante
             logger.info("✓ SUCCESS | " + getClass().getName() + "::sendMessage() - Evento enviado (sync) a topic [{}] con key [{}]", topic);
             logger.info("← END | " + getClass().getName() +"::sendMessage()");
             
@@ -45,13 +47,14 @@ public class KafkaEventProducerService {
 	 * @param topic nombre del topic Kafka
 	 * @param sagaEvent el mensaje a enviar
 	 */
-	public void sendMessageWithKey(String topic, SagaEvent sagaEvent) {
+	public void sendMessageWithKey(String topic, BaseEventData  event) {
 		logger.info("→ START | " + getClass().getName() +"::sendMessageWithKey()");
 		
 		String key = UUID.randomUUID().toString();
 
-		try {			
-            kafkaTemplate.send(topic, key, sagaEvent).get(); // Bloqueante
+		try {		
+			FunctionUtils.printJsonPretty(event);
+            kafkaTemplate.send(topic, key, event).get(); // Bloqueante
             logger.info("✓ SUCCESS | " + getClass().getName() + "::sendMessageWithKey() - Evento enviado (sync) a topic [{}] con key [{}]", topic, key);
             logger.info("← END | " + getClass().getName() +"::sendMessageWithKey()");
             

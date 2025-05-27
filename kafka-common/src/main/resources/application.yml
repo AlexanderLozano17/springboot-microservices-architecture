@@ -8,7 +8,7 @@ spring:
     name: kafka-common-service
 
   kafka:
-    bootstrap-servers: localhost:9092,localhost:9093
+    bootstrap-servers: localhost:9092
 
     producer:
       retries: 5

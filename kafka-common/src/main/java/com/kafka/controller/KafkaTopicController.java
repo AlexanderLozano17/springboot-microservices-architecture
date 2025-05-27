@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kafka.events.SagaEvent;
+import com.kafka.saga.BaseEventData;
 import com.kafka.service.KafkaEventProducerService;
 import com.kafka.service.KafkaTopicService;
+import com.kafka.utils.FunctionUtils;
 
 @RestController
 @RequestMapping("/api/kafka")
@@ -33,8 +34,8 @@ public class KafkaTopicController {
 	private final KafkaEventProducerService kafkaEventProducerService;
 	
 	public KafkaTopicController(KafkaAdmin kafkaAdmin, 
-								KafkaTopicService kafkaTopicService,
-								KafkaEventProducerService kafkaEventProducerService) {
+							    KafkaTopicService kafkaTopicService,
+							    KafkaEventProducerService kafkaEventProducerService) {
 		this.kafkaAdmin = kafkaAdmin;
 		this.kafkaTopicService = kafkaTopicService;
 		this.kafkaEventProducerService = kafkaEventProducerService;
@@ -67,6 +68,24 @@ public class KafkaTopicController {
 		Set<String> listTopics = this.kafkaTopicService.getAllTopics();		
 		logger.info("✓ SUCCESS  | " + getClass().getName() +"::getAllTopics()");
 		return ResponseEntity.ok(listTopics);		
+	}
+	
+	
+	@PostMapping("/producer-order")
+	public ResponseEntity<String> producerOrderEvent(@RequestParam String topicName, @RequestBody BaseEventData event) {
+		logger.info("→ START | " + getClass().getName() +"::producerOrderEvent()");
+
+		try {
+			FunctionUtils.printJsonPretty(event);
+			kafkaEventProducerService.sendMessageWithKey(topicName, event);
+			
+			logger.info("✓ SUCCESS  | " + getClass().getName() +"::producerOrderEvent()");
+			return ResponseEntity.ok("producerOrderEvent creado correctamente.");
+		
+		} catch (Exception e) {
+			logger.info("✖ ERROR | " + getClass().getName() +"::producerOrderEvent() - {}",  e.getMessage() );
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al prudcir el evento producerOrderEvent: " + e.getMessage());
+		}
 	}
 	
 }
