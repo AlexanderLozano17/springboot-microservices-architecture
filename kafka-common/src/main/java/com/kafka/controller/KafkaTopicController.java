@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kafka.saga.BaseEventData;
+import com.kafka.saga.EventDataExample;
 import com.kafka.service.KafkaEventProducerService;
 import com.kafka.service.KafkaTopicService;
 import com.kafka.utils.FunctionUtils;
@@ -71,8 +71,8 @@ public class KafkaTopicController {
 	}
 	
 	
-	@PostMapping("/producer-order")
-	public ResponseEntity<String> producerOrderEvent(@RequestParam String topicName, @RequestBody BaseEventData event) {
+	@PostMapping("/producer-order-example")
+	public ResponseEntity<String> producerOrderEventExample(@RequestParam String topicName, @RequestBody EventDataExample event) {
 		logger.info("→ START | " + getClass().getName() +"::producerOrderEvent()");
 
 		try {

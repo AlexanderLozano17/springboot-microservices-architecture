@@ -12,14 +12,14 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-
-  h2:
-    console:
-      enabled: true         # Habilita la consola web
-      path: /h2-console     # URL para acceder a la consola
-
+  
   jpa:
     hibernate:
       ddl-auto: update      # Crea o actualiza tablas según las entidades
     show-sql: true          # Muestra las consultas SQL en la consola
     database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true         # Habilita la consola web
+      path: /h2-console     # URL para acceder a la consola
