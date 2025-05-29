@@ -102,14 +102,14 @@ role_permissions
 #### `menu_category`
 | Campo       | Tipo     | Descripción              |
 |-------------|----------|--------------------------|
-| id          | UUID     | Clave primaria           |
+| id          | BIGINT   | Clave primaria           |
 | name        | VARCHAR  | Nombre de la categoría   |
 | description | VARCHAR  | Descripción              |
 
 #### `menu_item`
 | Campo       | Tipo     | Descripción                      |
 |-------------|----------|----------------------------------|
-| id          | UUID     | Clave primaria                   |
+| id          | BIGINT   | Clave primaria                   |
 | name        | VARCHAR  | Nombre del ítem                  |
 | description | VARCHAR  | Descripción                      |
 | price       | DECIMAL  | Precio del ítem                  |
@@ -123,7 +123,7 @@ role_permissions
 #### `inventory_item`
 | Campo            | Tipo     | Descripción                        |
 |------------------|----------|------------------------------------|
-| id               | UUID     | Clave primaria                     |
+| id               | BIGINT   | Clave primaria                     |
 | name             | VARCHAR  | Nombre del insumo                  |
 | unit             | VARCHAR  | Unidad (gramos, litros, etc.)      |
 | quantity_available | NUMERIC | Cantidad disponible               |
@@ -133,9 +133,9 @@ role_permissions
 #### `menu_item_ingredient`
 | Campo             | Tipo     | Descripción                    |
 |-------------------|----------|--------------------------------|
-| id                | UUID     | Clave primaria                 |
-| menu_item_id      | UUID     | FK → `menu_item.id`            |
-| inventory_item_id | UUID     | FK → `inventory_item.id`       |
+| id                | BIGINT   | Clave primaria                 |
+| menu_item_id      | BIGINT   | FK → `menu_item.id`            |
+| inventory_item_id | BIGINT   | FK → `inventory_item.id`       |
 | quantity_required | NUMERIC  | Cantidad por ítem de menú      |
 
 ---
@@ -145,7 +145,7 @@ role_permissions
 #### `promotion`
 | Campo         | Tipo     | Descripción                       |
 |---------------|----------|-----------------------------------|
-| id            | UUID     | Clave primaria                    |
+| id            | BIGINT   | Clave primaria                    |
 | name          | VARCHAR  | Nombre de la promoción            |
 | description   | TEXT     | Descripción                       |
 | discount_type | VARCHAR  | `PERCENTAGE` o `FIXED`            |
@@ -157,9 +157,9 @@ role_permissions
 #### `promotion_menu_item`
 | Campo         | Tipo     | Descripción                     |
 |---------------|----------|---------------------------------|
-| id            | UUID     | Clave primaria                  |
-| promotion_id  | UUID     | FK → `promotion.id`             |
-| menu_item_id  | UUID     | FK → `menu_item.id`             |
+| id            | BIGINT   | Clave primaria                  |
+| promotion_id  | BIGINT   | FK → `promotion.id`             |
+| menu_item_id  | BIGINT   | FK → `menu_item.id`             |
 
 ---
 
@@ -168,7 +168,7 @@ role_permissions
 #### `user`
 | Campo         | Tipo     | Descripción           |
 |---------------|----------|-----------------------|
-| id            | UUID     | Clave primaria        |
+| id            | BIGSERIAL| Clave primaria        |
 | username      | VARCHAR  | Nombre de usuario     |
 | password_hash | VARCHAR  | Contraseña cifrada    |
 | full_name     | VARCHAR  | Nombre completo       |
@@ -177,8 +177,8 @@ role_permissions
 #### `audit_log`
 | Campo     | Tipo      | Descripción                         |
 |-----------|-----------|-------------------------------------|
-| id        | UUID      | Clave primaria                      |
-| user_id   | UUID      | FK → `user.id`                      |
+| id        | BIGSERIAL | Clave primaria                      |
+| user_id   | BIGINT    | FK → `user.id`                      |
 | action    | TEXT      | Acción realizada                    |
 | timestamp | TIMESTAMP | Fecha y hora de la acción           |
 
@@ -187,35 +187,41 @@ role_permissions
 ## 🧾 Event Sourcing y Sagas
 
 ### `event_order_store` (reemplaza `customer_order`)
-| Campo      | Tipo      | Descripción                         |
-|------------|-----------|-------------------------------------|
-| id         | UUID      | Clave primaria                      |
-| order_id   | UUID      | Identificador lógico de orden       |
-| event_type | VARCHAR   | Tipo de evento (`OrderPlaced`, etc.)|
-| payload    | JSONB     | Datos del evento                    |
-| created_at | TIMESTAMP | Fecha de creación del evento        |
-| status     | VARCHAR   | Estado del evento (`PENDING`, etc.) |
-| saga_id    | UUID      | Relación con la saga (opcional)     |
+| Columna      | Tipo                  | Restricciones                    | Descripción                                      |
+|--------------|-----------------------|--------------------------------|-------------------------------------------------|
+| id           | BIGSERIAL             | PRIMARY KEY                    | Identificador único autoincremental              |
+| aggregate_id | VARCHAR(100)          | NOT NULL                      | ID único para toda la saga                        |
+| version      | VARCHAR(20)           | NOT NULL                      | Versión del payload del evento                    |
+| source       | VARCHAR(100)          | NOT NULL                      | Microservicio que emitió el evento                |
+| event_type   | VARCHAR(100)          | NOT NULL                      | Tipo de evento (ejemplo: `OrderPlaced`, tec.)   |
+| saga_state   | VARCHAR(50)           | NOT NULL                      | Estado actual de la saga (enum representado como texto) |
+| payload      | JSONB                 | NOT NULL                      | Datos del evento en formato JSON                   |
+| timestamp    | TIMESTAMP WITH TIME ZONE | NOT NULL                    | Marca temporal del evento                           |
+| compensating | BOOLEAN               | DEFAULT FALSE                 | Indica si es un evento compensatorio (rollback)   |
+
 
 ---
 
 ### `event_invoice_store` (reemplaza `invoice`)
-| Campo       | Tipo      | Descripción                         |
-|-------------|-----------|-------------------------------------|
-| id          | UUID      | Clave primaria                      |
-| invoice_id  | UUID      | Identificador lógico de factura     |
-| event_type  | VARCHAR   | Tipo de evento (`InvoiceCreated`, etc.)|
-| payload     | JSONB     | Datos del evento                    |
-| created_at  | TIMESTAMP | Fecha del evento                    |
-| status      | VARCHAR   | Estado del evento                   |
-| saga_id     | UUID      | Relación con la saga (opcional)     |
+| Columna      | Tipo                  | Restricciones                    | Descripción                                      |
+|--------------|-----------------------|--------------------------------|-------------------------------------------------|
+| id           | BIGSERIAL             | PRIMARY KEY                    | Identificador único autoincremental              |
+| aggregate_id | VARCHAR(100)          | NOT NULL                      | ID único para toda la saga                        |
+| version      | VARCHAR(20)           | NOT NULL                      | Versión del payload del evento                    |
+| source       | VARCHAR(100)          | NOT NULL                      | Microservicio que emitió el evento                |
+| event_type   | VARCHAR(100)          | NOT NULL                      | Tipo de evento (ejemplo: `InvoiceCreated`, tec.)   |
+| saga_state   | VARCHAR(50)           | NOT NULL                      | Estado actual de la saga (enum representado como texto) |
+| payload      | JSONB                 | NOT NULL                      | Datos del evento en formato JSON                   |
+| timestamp    | TIMESTAMP WITH TIME ZONE | NOT NULL                    | Marca temporal del evento                           |
+| compensating | BOOLEAN               | DEFAULT FALSE                 | Indica si es un evento compensatorio (rollback)   |
+
 
 ---
 
 ### `saga_log`
 | Campo        | Tipo      | Descripción                            |
 |--------------|-----------|----------------------------------------|
-| id           | UUID      | Clave primaria                         |
+| id           | BIGSERIAL | Clave primaria                         |
 | saga_type    | VARCHAR   | Nombre de la saga (`CreateOrderSaga`) |
 | saga_id      | UUID      | Identificador único                    |
 | current_step | VARCHAR   | Paso actual de la saga                 |

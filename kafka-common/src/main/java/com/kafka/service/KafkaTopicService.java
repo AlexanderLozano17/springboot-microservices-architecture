@@ -25,20 +25,20 @@ public class KafkaTopicService {
 	}
 	
 	public Set<String> getAllTopics() {
-		logger.info("→ START | " + getClass().getName() +"::getAllTopics()");
+		logger.info("→ START | " + KafkaTopicService.class.getName() +"::getAllTopics()");
 		
 		Properties config = new Properties();
 		config.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
 		
 		try (AdminClient adminClient = AdminClient.create(config)) {
-			logger.info("✓ SUCCESS | " + getClass().getName() +"::getAllTopics()");
+			logger.info("✓ SUCCESS | " + KafkaTopicService.class.getName() +"::getAllTopics()");
 			ListTopicsResult topics = adminClient.listTopics();
-			logger.info("← END | " + getClass().getName() +"::getAllTopics()");
+			logger.info("← END | " + KafkaTopicService.class.getName() +"::getAllTopics()");
 			return topics.names().get();
 			
 		} catch (InterruptedException | ExecutionException e) {
-			logger.info("✖ ERROR | " + getClass().getName() +"::getAllTopics() - {}",  e.getMessage() );
-			logger.info("← END  | " + getClass().getName() +"::getAllTopics()");
+			logger.info("✖ ERROR | " + KafkaTopicService.class.getName() +"::getAllTopics() - {}",  e.getMessage() );
+			logger.info("← END  | " + KafkaTopicService.class.getName() +"::getAllTopics()");
 			throw new RuntimeException("Error fetching Kafka topics", e);
 		}
 	}

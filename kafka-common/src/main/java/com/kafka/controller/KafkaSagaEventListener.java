@@ -6,6 +6,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import com.kafka.saga.BaseEventData;
+import com.kafka.utils.ConstantTopics;
 import com.kafka.utils.FunctionUtils;
 
 @Component
@@ -14,9 +15,8 @@ public class KafkaSagaEventListener {
 	private final Logger logger = LoggerFactory.getLogger(KafkaSagaEventListener.class);
 		
     @KafkaListener(
-    		topics = "topic-orders", 
-    		groupId = "group-order", 
-    		containerFactory = "kafkaListenerContainerFactory")
+    		topics = ConstantTopics.TOPIC_ORDERS, 
+    		groupId = ConstantTopics.GROUP_ORDER_1)
     public void consume(BaseEventData event) {
         logger.info("✓ Evento Saga recibido - sagaId: {}", event.getAggregateId());
 

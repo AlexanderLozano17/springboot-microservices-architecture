@@ -8,19 +8,24 @@ spring:
     name: kafka-common-service
 
   datasource:
-    url: jdbc:h2:mem:testdb
+    # MODE=PostgreSQL: hace que H2 interprete la sintaxis como si fuera PostgreSQL (útil si se migra).
+    # DB_CLOSE_DELAY=-1 indica: No cerrar la base de datos en memoria mientras la JVM esté viva
+    url: jdbc:h2:mem:restaurant;MODE=PostgreSQL;DB_CLOSE_DELAY=-1 
     driver-class-name: org.h2.Driver
     username: sa
     password:
     
   jpa:
+    properties:
+      hibernate:
+        default_schema: kafka_schema  # Define el esquema donde se crearán y buscarán las tablas.
     hibernate:
       ddl-auto: none
     show-sql: false
     database-platform: org.hibernate.dialect.H2Dialect
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: 192.168.1.21:9092
 
     producer:
       retries: 5
@@ -32,3 +37,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
+  resilience4j:
+    circuitbreaker:
+      instances:
+        sagaEventConsumer:
+          registerHealthIndicator: true    # ✅ Registra el estado del Circuit Breaker en el endpoint /actuator/health.
+          slidingWindowSize: 10            # 🔁 Número de llamadas recientes usadas para calcular la tasa de fallos (en este caso, 10).
+          failureRateThreshold: 50         # ❌ Porcentaje de fallos permitido antes de abrir el circuito. Aquí: 50% de fallos en 10 llamadas.
+          waitDurationInOpenState: 10s     # ⏱️ Tiempo que el circuito se mantiene abierto antes de pasar a "half-open" y probar de nuevo.

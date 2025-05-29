@@ -15,9 +15,9 @@ public class KafkaEventProducerService {
 	
 	private final Logger logger = LoggerFactory.getLogger(KafkaEventProducerService.class);
 
-	private final KafkaTemplate<String, Object> kafkaTemplate;
+	private final KafkaTemplate<String, BaseEventData> kafkaTemplate;
 	
-	public KafkaEventProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
+	public KafkaEventProducerService(KafkaTemplate<String, BaseEventData> kafkaTemplate) {
 		this.kafkaTemplate = kafkaTemplate;
 	}
 		
@@ -27,17 +27,17 @@ public class KafkaEventProducerService {
 	 * @param sagaEvent el mensaje a enviar
 	 */
 	public void sendMessage(String topic, BaseEventData event) {
-		logger.info("→ START | " + getClass().getName() +"::sendMessage()");
+		logger.info("→ START | " + KafkaEventProducerService.class.getName() +"::sendMessage()");
 		
 		try {	
 			FunctionUtils.printJsonPretty(event);
             kafkaTemplate.send(topic, event).get(); // Bloqueante
-            logger.info("✓ SUCCESS | " + getClass().getName() + "::sendMessage() - Evento enviado (sync) a topic [{}] con key [{}]", topic);
-            logger.info("← END | " + getClass().getName() +"::sendMessage()");
+            logger.info("✓ SUCCESS | " + KafkaEventProducerService.class.getName() + "::sendMessage() - Evento enviado (sync) a topic [{}] con key [{}]", topic);
+            logger.info("← END | " + KafkaEventProducerService.class.getName() +"::sendMessage()");
             
         } catch (Exception ex) {        	
-        	logger.error("✖ ERROR | " + getClass().getName() +"::sendMessage() - Error en envío síncrono a topic [{}] con key [{}]: {}", topic, ex.getMessage());
-        	logger.info("← END | " + getClass().getName() +"::sendMessage()");
+        	logger.error("✖ ERROR | " + KafkaEventProducerService.class.getName() +"::sendMessage() - Error en envío síncrono a topic [{}] con key [{}]: {}", topic, ex.getMessage());
+        	logger.info("← END | " + KafkaEventProducerService.class.getName() +"::sendMessage()");
             throw new RuntimeException("Error enviando mensaje a Kafka", ex);
         }
 	}
@@ -48,19 +48,19 @@ public class KafkaEventProducerService {
 	 * @param sagaEvent el mensaje a enviar
 	 */
 	public void sendMessageWithKey(String topic, BaseEventData  event) {
-		logger.info("→ START | " + getClass().getName() +"::sendMessageWithKey()");
+		logger.info("→ START | " + KafkaEventProducerService.class.getName() +"::sendMessageWithKey()");
 		
 		String key = UUID.randomUUID().toString();
 
 		try {		
 			FunctionUtils.printJsonPretty(event);
             kafkaTemplate.send(topic, key, event).get(); // Bloqueante
-            logger.info("✓ SUCCESS | " + getClass().getName() + "::sendMessageWithKey() - Evento enviado (sync) a topic [{}] con key [{}]", topic, key);
-            logger.info("← END | " + getClass().getName() +"::sendMessageWithKey()");
+            logger.info("✓ SUCCESS | " + KafkaEventProducerService.class.getName() + "::sendMessageWithKey() - Evento enviado (sync) a topic [{}] con key [{}]", topic, key);
+            logger.info("← END | " + KafkaEventProducerService.class.getName() +"::sendMessageWithKey()");
             
         } catch (Exception ex) {        	
-        	logger.error("✖ ERROR | " + getClass().getName() +"::sendMessageWithKey() - Error en envío síncrono a topic [{}] con key [{}]: {}", topic, key, ex.getMessage());
-        	logger.info("← END | " + getClass().getName() +"::sendMessageWithKey()");
+        	logger.error("✖ ERROR | " + KafkaEventProducerService.class.getName() +"::sendMessageWithKey() - Error en envío síncrono a topic [{}] con key [{}]: {}", topic, key, ex.getMessage());
+        	logger.info("← END | " + KafkaEventProducerService.class.getName() +"::sendMessageWithKey()");
             throw new RuntimeException("Error enviando mensaje a Kafka", ex);
         }
 	}

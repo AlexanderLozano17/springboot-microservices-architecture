@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -21,7 +21,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kafka.properties.KafkaProperties;
 import com.kafka.saga.BaseEventData;
 
-@Configurable
+@Configuration
 @EnableKafka
 public class KafkaConsumerConfig {
 
@@ -33,28 +33,26 @@ public class KafkaConsumerConfig {
 	
 	@Bean
 	public ConsumerFactory<String, BaseEventData> consumerFactorySagaEvent() {
-		 Map<String, Object> config = new HashMap<>();
-	        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
-	        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-	        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-	        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-	        config.put(JsonDeserializer.TRUSTED_PACKAGES, "com.kafka.saga");
-	        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "com.kafka.saga.SagaEvent"); // Opcional, asegura el tipo
-	        
-	        ObjectMapper mapper = new ObjectMapper();
-	        mapper.registerModule(new JavaTimeModule());
-	        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-	        
-	        JsonDeserializer<BaseEventData> deserializer = new JsonDeserializer<>(BaseEventData.class, mapper);
-	        deserializer.setRemoveTypeHeaders(false);
-	        deserializer.addTrustedPackages("com.kafka.saga");
-	        deserializer.setUseTypeMapperForKey(true);
-	        
-	        return new DefaultKafkaConsumerFactory<>(
-	                config,
-	                new StringDeserializer(),
-	                deserializer
-	            );
+		Map<String, Object> config = new HashMap<>();
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
+        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        
+        JsonDeserializer<BaseEventData> deserializer = new JsonDeserializer<>(BaseEventData.class, mapper);
+        deserializer.setRemoveTypeHeaders(false);
+        //deserializer.addTrustedPackages("com.kafka.saga");
+        deserializer.setUseTypeMapperForKey(true);
+        
+        return new DefaultKafkaConsumerFactory<>(
+                config,
+                new StringDeserializer(),
+                deserializer
+            );
 	}
 	    
 	@Bean
