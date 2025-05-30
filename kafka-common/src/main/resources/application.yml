@@ -36,12 +36,3 @@ spring:
       enable-idempotence: true
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
-  resilience4j:
-    circuitbreaker:
-      instances:
-        sagaEventConsumer:
-          registerHealthIndicator: true    # ✅ Registra el estado del Circuit Breaker en el endpoint /actuator/health.
-          slidingWindowSize: 10            # 🔁 Número de llamadas recientes usadas para calcular la tasa de fallos (en este caso, 10).
-          failureRateThreshold: 50         # ❌ Porcentaje de fallos permitido antes de abrir el circuito. Aquí: 50% de fallos en 10 llamadas.
-          waitDurationInOpenState: 10s     # ⏱️ Tiempo que el circuito se mantiene abierto antes de pasar a "half-open" y probar de nuevo.
