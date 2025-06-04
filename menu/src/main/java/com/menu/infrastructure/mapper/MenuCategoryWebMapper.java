@@ -4,38 +4,33 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
 import com.menu.application.dto.MenuCategoryDto;
+import com.menu.domain.model.MenuCategory;
 import com.menu.infrastructure.persistence.entity.MenuCategoryEntity;
 import com.menu.infrastructure.web.model.request.MenuCategoryRequest;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface MenuCategoryMapper {
+public interface MenuCategoryWebMapper {
 
-	/**
-	 * 
-	 * @param menuCategoryEntity
-	 * @return
-	 */
-	MenuCategoryDto entityToDto(MenuCategoryEntity menuCategoryEntity);
 	
 	/**
 	 * 
-	 * @param MenuCategoryDto
+	 * @param menuCategory
 	 * @return
 	 */
-	MenuCategoryEntity dtoToJpaEntity(MenuCategoryDto MenuCategoryDto); 
+	MenuCategoryEntity MenuCategoryToMenuCategoryEntity(MenuCategory menuCategory);	
 	
 	/**
 	 * 
-	 * @param request
+	 * @param menuCategory
 	 * @return
 	 */
-	MenuCategoryEntity requestToJpaEntity(MenuCategoryRequest request); 
+	MenuCategory MenuCategoryEntityToMenuCategory(MenuCategoryEntity menuCategory);
 	
 	/**
 	 * 
-	 * @param request
+	 * @param menuCategoryRequest
 	 * @return
 	 */
-	MenuCategoryDto requestToDto(MenuCategoryRequest request); 
-
+	MenuCategoryDto menuCategoryRequestToMenuCategoryDto(MenuCategoryRequest menuCategoryRequest);
+	
 }

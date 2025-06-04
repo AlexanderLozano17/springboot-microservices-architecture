@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.menu.application.dto.MenuCategoryDto;
 import com.menu.application.dto.MenuItemDto;
+import com.menu.application.mapper.MenuCategoryApplicationMapper;
 import com.menu.application.mapper.MenuItemApplicationMapper;
 import com.menu.application.spi.MenuCategoryPersistencePort;
 import com.menu.application.spi.MenuItemPersistencePort;
 import com.menu.application.usecase.GetMenuItemUseCase;
+import com.menu.domain.model.MenuCategory;
 import com.menu.domain.model.MenuItem;
 
 @Service
@@ -20,12 +22,15 @@ public class GetMenuItemUseCaseService implements GetMenuItemUseCase {
 	private final MenuItemPersistencePort itemPersistencePort;
 	private final MenuCategoryPersistencePort categoryPersistencePort;
 	private final MenuItemApplicationMapper mapper;
+	private final MenuCategoryApplicationMapper categoryMappper;
 	
 	public GetMenuItemUseCaseService(MenuItemPersistencePort itemPersistencePort, 
 									 MenuCategoryPersistencePort categoryPersistencePort,
+									 MenuCategoryApplicationMapper categoryMappper,
 									 MenuItemApplicationMapper mapper) {
 		this.itemPersistencePort = itemPersistencePort;
 		this.categoryPersistencePort = categoryPersistencePort;
+		this.categoryMappper = categoryMappper;
 		this.mapper = mapper;
 	}
 	
@@ -39,11 +44,14 @@ public class GetMenuItemUseCaseService implements GetMenuItemUseCase {
 			if (includeCategory && menuItemDto.getMenuCategoryId() != null && menuItemDto.getMenuCategoryId() != null) {				
 				 Long categoryId = menuItemDto.getMenuCategoryId();
 				 
-                 Optional<MenuCategoryDto> fullCategoryDtoOpt = categoryPersistencePort.getdById(categoryId);
+                 Optional<MenuCategory> categoryDtoOpt = categoryPersistencePort.getdById(categoryId);
 
-                 if (fullCategoryDtoOpt.isPresent()) {
+                 if (categoryDtoOpt.isPresent()) {
+                	 
+                	 MenuCategoryDto categoryDto = categoryMappper.menuCategoryToMenuCategoryDto(categoryDtoOpt.get());               	 
+                	 
                      return menuItemDto.toBuilder() // Obtiene un builder pre-inicializado con los valores de menuItemDto
-                                       .menuCategoryDetails(fullCategoryDtoOpt.get()) // Setea el nuevo valor
+                                       .menuCategoryDetails(categoryDto) // Setea el nuevo valor
                                        .build(); // <-- ¡Devuelve la NUEVA instancia modificada!
                  }
 			}

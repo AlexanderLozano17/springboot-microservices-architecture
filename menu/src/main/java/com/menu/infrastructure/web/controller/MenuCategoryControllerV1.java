@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.menu.application.dto.MenuCategoryDto;
 import com.menu.application.usecase.CreateMenuCategoryUseCase;
 import com.menu.application.usecase.GetMenuCategoryUseCase;
-import com.menu.infrastructure.mapper.MenuCategoryMapper;
+import com.menu.infrastructure.mapper.MenuCategoryWebMapper;
 import com.menu.infrastructure.web.controller.version.ApiVersionPaths;
 import com.menu.infrastructure.web.model.request.MenuCategoryRequest;
 import com.menu.infrastructure.web.model.response.CommonApiResponse;
@@ -41,10 +41,10 @@ public class MenuCategoryControllerV1 {
 
 	private final CreateMenuCategoryUseCase createMenuCategoryUseCase;
 	private final GetMenuCategoryUseCase getMenuCategoryUseCase;
-	private final MenuCategoryMapper mapper;
+	private final MenuCategoryWebMapper mapper;
 
 	public MenuCategoryControllerV1(CreateMenuCategoryUseCase createMenuCategoryUseCase,
-			GetMenuCategoryUseCase getMenuCategoryUseCase, MenuCategoryMapper mapper) {
+			GetMenuCategoryUseCase getMenuCategoryUseCase, MenuCategoryWebMapper mapper) {
 		this.createMenuCategoryUseCase = createMenuCategoryUseCase;
 		this.getMenuCategoryUseCase = getMenuCategoryUseCase;
 		this.mapper = mapper;
@@ -61,7 +61,7 @@ public class MenuCategoryControllerV1 {
 	public ResponseEntity<EntityModel<CommonApiResponse>> createMenuCategory(@Validated @RequestBody MenuCategoryRequest request) {
 		LOGGER.info("init createMenuCategory()");
  
-		MenuCategoryDto reqDto = mapper.requestToDto(request);
+		MenuCategoryDto reqDto = mapper.menuCategoryRequestToMenuCategoryDto(request);
 		Optional<MenuCategoryDto> createdCategoryOpt = createMenuCategoryUseCase.create(reqDto);
 
 		if (createdCategoryOpt.isPresent()) {

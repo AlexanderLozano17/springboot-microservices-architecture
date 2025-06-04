@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.menu.application.dto.MenuCategoryDto;
 import com.menu.application.spi.MenuCategoryPersistencePort;
-import com.menu.infrastructure.mapper.MenuCategoryMapper;
+import com.menu.domain.model.MenuCategory;
+import com.menu.infrastructure.mapper.MenuCategoryWebMapper;
 import com.menu.infrastructure.persistence.entity.MenuCategoryEntity;
 import com.menu.infrastructure.persistence.repository.MenuCategoryJpaRepository;
 
@@ -14,25 +14,25 @@ import com.menu.infrastructure.persistence.repository.MenuCategoryJpaRepository;
 public class MenuCategoryPersistenceAdapter implements MenuCategoryPersistencePort {
 
 	private final MenuCategoryJpaRepository repository;
-	private final MenuCategoryMapper mapper;
+	private final MenuCategoryWebMapper mapper;
 	
-	public MenuCategoryPersistenceAdapter(MenuCategoryJpaRepository repository, MenuCategoryMapper mapper) {
+	public MenuCategoryPersistenceAdapter(MenuCategoryJpaRepository repository, MenuCategoryWebMapper mapper) {
 		this.repository = repository;
 		this.mapper = mapper;
 	}
 		
 	@Override
-	public Optional<MenuCategoryDto> save(MenuCategoryDto menuCategoryDto) {
-		MenuCategoryEntity entity = mapper.dtoToJpaEntity(menuCategoryDto);
+	public Optional<MenuCategory> save(MenuCategory menuCategory) {
+		MenuCategoryEntity entity = mapper.MenuCategoryToMenuCategoryEntity(menuCategory);
 		MenuCategoryEntity savedEntity = repository.save(entity);
-		return Optional.ofNullable(mapper.entityToDto(savedEntity));
+		return Optional.ofNullable(mapper.MenuCategoryEntityToMenuCategory(savedEntity));
 	}
 
 	@Override
-	public Optional<MenuCategoryDto> getdById(Long id) {
+	public Optional<MenuCategory> getdById(Long id) {
 		Optional<MenuCategoryEntity> entity = repository.findById(id);		
 		if (entity.isPresent()) {
-			return Optional.ofNullable(mapper.entityToDto(entity.get()));
+			return Optional.ofNullable(mapper.MenuCategoryEntityToMenuCategory(entity.get()));
 		}
 		return Optional.empty();
 		

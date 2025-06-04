@@ -2,7 +2,7 @@ package com.menu.application.spi;
 
 import java.util.Optional;
 
-import com.menu.application.dto.MenuCategoryDto;
+import com.menu.domain.model.MenuCategory;
 
 public interface MenuCategoryPersistencePort {
 
@@ -11,12 +11,12 @@ public interface MenuCategoryPersistencePort {
 	 * @param menuCategory
 	 * @return
 	 */
-	Optional<MenuCategoryDto> save(MenuCategoryDto menuCategory);
+	Optional<MenuCategory> save(MenuCategory menuCategory);
 	
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	Optional<MenuCategoryDto> getdById(Long id);
+	Optional<MenuCategory> getdById(Long id);
 }
