@@ -1,6 +1,5 @@
 package com.menu.infrastructure.persistence.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -14,7 +13,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -24,35 +24,42 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "menu_category", indexes = @Index(name = "idx_category_name", columnList = "name")) 
+@Table(name = "menu_items") 
 @Data 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class) 
-public class MenuCategoryEntity implements Serializable {
+public class MenuItemEntity {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Marca el campo como la clave primaria
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
-    @NotBlank(message = "El nombre de la categoría no puede estar vacío.") 
-    @Size(max = 50, message = "El nombre no puede exceder los 50 caracteres.") 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "El nombre del ítem no puede estar vacío.")
+    @Size(max = 50, message = "El nombre no puede exceder los 50 caracteres.")
+    @Column(nullable = false, unique = true, length = 50)
     private String name;
 
     @Size(max = 500, message = "La descripción no puede exceder los 500 caracteres.")
     @Column(columnDefinition = "TEXT")
     private String description;
-    
-    @CreatedDate // Asignado automáticamente al crear la entidad
-    @Column(nullable = false, updatable = false) 
+
+    @Column(nullable = false, precision = 10, scale = 2) 
+    private BigDecimal price;
+
+    @Column(nullable = false) 
+    private Boolean available;
+  
+    @ManyToOne
+    @JoinColumn(name = "menu_category_id", nullable = false)
+    private MenuCategoryEntity menuCategory;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false) 
     private LocalDateTime createdAt;
 
-    @LastModifiedDate // Asignado automáticamente al actualizar la entidad
-    @Column(nullable = false) 
+    @LastModifiedDate 
+    @Column(name = "updated_at") 
     private LocalDateTime updatedAt;
-   
 }

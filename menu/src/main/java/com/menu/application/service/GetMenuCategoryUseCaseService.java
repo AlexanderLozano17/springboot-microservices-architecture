@@ -19,7 +19,7 @@ public class GetMenuCategoryUseCaseService implements GetMenuCategoryUseCase {
 
 	@Override
 	public Optional<MenuCategoryDto> findById(Long id) {
-		return persistencePort.findById(id);
+		return persistencePort.getdById(id);
 	}
 
 }

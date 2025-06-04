@@ -5,12 +5,12 @@ import java.io.Serializable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class MenuCategoryRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,8 +22,4 @@ public class MenuCategoryRequest implements Serializable {
     @Size(max = 255, message = "La descripción no puede exceder los 255 caracteres.")
     private String description;
     
-    public MenuCategoryRequest(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 }

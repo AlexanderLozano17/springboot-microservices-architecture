@@ -12,4 +12,5 @@ public interface GetMenuCategoryUseCase {
 	 * @return
 	 */
 	 Optional<MenuCategoryDto> findById(Long id);
+	 
 }

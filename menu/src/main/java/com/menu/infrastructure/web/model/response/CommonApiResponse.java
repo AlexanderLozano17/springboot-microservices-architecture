@@ -2,13 +2,25 @@ package com.menu.infrastructure.web.model.response;
 
 import java.time.LocalDateTime;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Standard API response wrapper")
 public class CommonApiResponse<T> {
 
-	private int status;
-	private String message;
-	private boolean success;
-	private T data;
-	private LocalDateTime timestamp;
+    @Schema(description = "HTTP status code of the response", example = "200")
+    private int status;
+
+    @Schema(description = "Human-readable message describing the result", example = "Operation completed successfully")
+    private String message;
+
+    @Schema(description = "Indicates whether the operation was successful", example = "true")
+    private boolean success;
+
+    @Schema(description = "The actual response payload", example = "{ \"id\": 1, \"name\": \"Category A\" }")
+    private T data;
+
+    @Schema(description = "Date and time when the response was generated", example = "2025-05-31T16:00:00")
+    private LocalDateTime timestamp;
 
 	// Constructor privado para ser usado por los métodos estáticos o un builder
 	private CommonApiResponse(int status, String message, boolean success, T data) {

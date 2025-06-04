@@ -18,5 +18,5 @@ public interface MenuCategoryPersistencePort {
 	 * @param id
 	 * @return
 	 */
-	Optional<MenuCategoryDto> findById(Long id);
+	Optional<MenuCategoryDto> getdById(Long id);
 }

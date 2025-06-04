@@ -46,16 +46,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
     
-    @ExceptionHandler({Exception.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse notFoundObjectExceptionHandler(Exception ex) {
-        return ErrorResponse.builder()
-                .status(HttpStatus.NOT_FOUND.value())
-                .message(ex.getMessage())
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleConstraintViolation(ConstraintViolationException ex) {

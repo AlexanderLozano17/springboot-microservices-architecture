@@ -29,9 +29,13 @@ public class MenuCategoryPersistenceAdapter implements MenuCategoryPersistencePo
 	}
 
 	@Override
-	public Optional<MenuCategoryDto> findById(Long id) {
-		MenuCategoryEntity entity = repository.findById(id).get();
-		return Optional.ofNullable(mapper.entityToDto(entity));
+	public Optional<MenuCategoryDto> getdById(Long id) {
+		Optional<MenuCategoryEntity> entity = repository.findById(id);		
+		if (entity.isPresent()) {
+			return Optional.ofNullable(mapper.entityToDto(entity.get()));
+		}
+		return Optional.empty();
+		
 	}
 
 }

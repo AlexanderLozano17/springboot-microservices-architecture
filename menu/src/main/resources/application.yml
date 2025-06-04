@@ -26,8 +26,9 @@ spring:
     properties:
       hibernate:
         #default_schema: menu        # Define el esquema por defecto
-  sql:
-    init:
-      mode: always
-     # schema-locations: classpath:schema.sql
-     # data-locations: classpath:data.sql
+
+  doc:
+    api-docs:
+      path: /api-docs
+    swagger-ui:
+      path: /swagger-ui.html
