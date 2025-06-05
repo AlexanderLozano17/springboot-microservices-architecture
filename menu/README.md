@@ -43,17 +43,9 @@ Este módulo forma parte de un sistema más amplio y tiene como objetivo gestion
 │
 ├── 📁 domain                        # Núcleo del negocio (modelo y lógica pura)
 │   ├── 📁 model                     # Entidades del dominio con reglas y comportamiento propio
-│   ├── 📁 service        ### **Documentación de la API REST:**  
-   Accede a Swagger UI para ver los endpoints disponibles:  
-   
-   ```bash
-   👉 [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
-   ```
-  
-
----           # Interfaces de servicios de dominio (reglas del negocio)
-│
-├── 📁 infrastructure               # Adaptadores y configuración del mundo externo
+│   ├── 📁 service                   #  
+│   │
+├── 📁 infrastructure                # Adaptadores y configuración del mundo externo
 │   ├── 📁 adapter                   # Implementaciones de los puertos de infraestructura (SPI)
 │   ├── 📁 configuration             # Configuraciones generales (Beans, Swagger, etc.)
 │   ├── 📁 mapper                    # Conversores entre entidades, DTOs y modelos de dominio
