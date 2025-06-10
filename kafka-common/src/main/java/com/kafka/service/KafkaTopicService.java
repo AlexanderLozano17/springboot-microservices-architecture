@@ -17,7 +17,18 @@ import org.springframework.stereotype.Service;
 
 import com.kafka.entity.ListTopicEntity;
 import com.kafka.properties.KafkaProperties;
-
+/**
+ * Servicio encargado de la gestión de topics en Kafka, limitado a operaciones de creación y consulta.
+ * <p>
+ * Proporciona una interfaz centralizada para interactuar con el clúster de Kafka en lo referente
+ * a la administración de topics, como la creación de nuevos topics bajo demanda o la obtención de
+ * metadatos relacionados (particiones, configuraciones, estado, etc.).
+ * </p>
+ *
+ * <p>
+ * No realiza envío ni consumo de mensajes, solo gestiona la existencia y propiedades de los topics.
+ * </p>
+ */
 @Service
 public class KafkaTopicService {
 

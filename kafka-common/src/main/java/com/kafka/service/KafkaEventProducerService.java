@@ -10,6 +10,14 @@ import org.springframework.stereotype.Service;
 import com.kafka.saga.BaseEventData;
 import com.kafka.utils.FunctionUtils;
 
+/**
+ * Servicio centralizado que contiene las implementaciones para el envío de mensajes a los distintos topics de Kafka.
+ * <p>
+ * Este servicio actúa como una fachada para los productores, permitiendo desacoplar la lógica de negocio
+ * del mecanismo de mensajería. Se encarga de construir y publicar eventos a los topics correspondientes,
+ * garantizando consistencia en el formato, manejo de excepciones y trazabilidad.
+ * </p>
+ */
 @Service
 public class KafkaEventProducerService {
 	
