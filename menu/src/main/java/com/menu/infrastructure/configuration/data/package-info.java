@@ -1,0 +1,1 @@
+package com.menu.infrastructure.configuration.data;

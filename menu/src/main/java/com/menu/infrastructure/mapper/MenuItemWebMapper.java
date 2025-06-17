@@ -17,7 +17,7 @@ public interface MenuItemWebMapper {
 	 * @param dto
 	 * @return
 	 */ 
-	@Mapping(target = "menuCategory.id", source = "menuCategoryId")
+	@Mapping(target = "category.id", source = "menuCategoryId")
 	MenuItemEntity menuItemToEntity(MenuItem menuItem);
 	
 	/**
@@ -25,7 +25,7 @@ public interface MenuItemWebMapper {
 	 * @param entity
 	 * @return
 	 */
-	@Mapping(target = "menuCategoryId", source="menuCategory.id")
+	@Mapping(target = "menuCategoryId", source="category.id")
 	MenuItem entityToMenuItem(MenuItemEntity menuItemEntity);
 	
 	/**
