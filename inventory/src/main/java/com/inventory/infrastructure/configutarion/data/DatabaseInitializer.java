@@ -1,4 +1,4 @@
-package com.menu.infrastructure.configuration.data;
+package com.inventory.infrastructure.configutarion.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +10,10 @@ public class DatabaseInitializer implements CommandLineRunner {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseInitializer.class);
 
-	private final MenuCategoryDataInitializer menuCategoryDataInitializer;
-	private final MenuItemDataInitializer menuItemDataInitializer;
+	private final DishDataInitializer dishDataInitializer;
 
-	public DatabaseInitializer(MenuCategoryDataInitializer menuCategoryDataInitializer,
-							   MenuItemDataInitializer menuItemDataInitializer) {
-		this.menuCategoryDataInitializer = menuCategoryDataInitializer;
-		this.menuItemDataInitializer = menuItemDataInitializer;
+	public DatabaseInitializer(DishDataInitializer dishDataInitializer) {
+		this.dishDataInitializer = dishDataInitializer;
 	}
 
 	@Override
@@ -24,8 +21,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 		LOGGER.info("init" + DatabaseInitializer.class.getName() + " | Insertando datos de pruebas");
 		// El orden es CRÍTICO debido a las dependencias de clave foránea.
         // Primero entidades independientes, luego las que tienen dependencias.
-        menuCategoryDataInitializer.menuCategoryRun();
-        menuItemDataInitializer.menuItemRun(); // Necesita Category y Dish
+        dishDataInitializer.dishRun();
 
         LOGGER.info(DatabaseInitializer.class.getName() + " | fin inserción datos de pruebas");
 		

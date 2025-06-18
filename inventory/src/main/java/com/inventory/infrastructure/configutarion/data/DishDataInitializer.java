@@ -1,4 +1,4 @@
-package com.menu.infrastructure.configuration.data;
+package com.inventory.infrastructure.configutarion.data;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.menu.infrastructure.persistence.entity.DishEntity;
-import com.menu.infrastructure.persistence.repository.DishJpaRepository;
+import com.inventory.infrastructure.persistence.entity.DishEntity;
+import com.inventory.infrastructure.persistence.repository.DishJpaRepository;
 
 @Component
 public class DishDataInitializer {
@@ -32,8 +32,8 @@ public class DishDataInitializer {
                 List<DishEntity> dishes = List.of(
                     new DishEntity("Ajiaco Santafereño", "Sopa tradicional colombiana con tres tipos de papa y pollo."),
                     new DishEntity("Lomo Salteado Base", "Preparación base de lomo salteado con verduras."),
-                    new DishEntity("Arroz Blanco Simple", "Cocción básica de arroz blanco."),
-                    new DishEntity("Limonada Natural", "Bebida refrescante a base de limón y azúcar.")
+                    new DishEntity("Limonada Natural", "Bebida refrescante a base de limón y azúcar."),
+                    new DishEntity("Arroz Blanco Simple", "Cocción básica de arroz blanco.")                    
                 );
 
                 dishJpaRepository.saveAll(dishes);

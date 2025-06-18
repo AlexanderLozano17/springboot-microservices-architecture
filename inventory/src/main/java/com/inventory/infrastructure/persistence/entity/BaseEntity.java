@@ -1,4 +1,4 @@
-package com.menu.infrastructure.persistence.entity;
+package com.inventory.infrastructure.persistence.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

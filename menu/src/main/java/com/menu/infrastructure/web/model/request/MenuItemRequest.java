@@ -33,5 +33,5 @@ public class MenuItemRequest implements Serializable{
     private Boolean available;
   
     @NotNull(message = "El ID de categoría no puede ser nulo.")
-    private Long menuCategoryId;
+    private Long categoryId;
 }

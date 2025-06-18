@@ -17,7 +17,7 @@ public interface MenuItemApplicationMapper {
 	 * @param menuItemDto
 	 * @return
 	 */
-	@Mapping(target = "menuCategoryDetails.id", source = "menuCategoryId")
+	@Mapping(target = "categoryDetails.id", source = "categoryId")
 	MenuItem MenuItemDtoToMenuItem(MenuItemDto menuItemDto);
 	
 	/**

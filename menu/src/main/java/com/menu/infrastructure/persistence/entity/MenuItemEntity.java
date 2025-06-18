@@ -22,7 +22,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "menu_items", indexes = @Index(name = "IDX_MENUITEM_NAME", columnList = "name"))  
+@Table(name = "menu_items", indexes = @Index(name = "IDX_MENUITEM_NAME", columnList = "name, dish_id"))  
 public class MenuItemEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,25 +59,19 @@ public class MenuItemEntity extends BaseEntity implements Serializable {
     @JoinColumn(name = "category_id", nullable = false) // Mapea la clave foránea en la tabla 'menu_items'. 'name = "category_id"' es el nombre de la columna FK; 'nullable = false' significa que cada ítem de menú DEBE tener una categoría.
     @NotNull(message = "Un ítem de menú debe tener una categoría asociada.") // Anotación de validación: asegura que el campo 'category' no sea nulo.
     private MenuCategoryEntity category; // Referencia a la entidad de la categoría a la que pertenece este ítem del menú.
-
-    // --- Relación: Muchos a Uno (Many-to-One) con DishEntity ---
-    // Un MenuItemEntity (ítem de menú) puede estar basado en UN DishEntity (receta base).
-    // Permite flexibilidad: un Dish (receta) puede ser usado por varios MenuItems con diferentes nombres o precios.
-    // 'nullable = true' permite que un MenuItem exista sin un Dish (ej., para bebidas embotelladas que no tienen una "receta" compleja interna).
-    // Si *todo* ítem de menú debe ser una receta, cámbialo a 'nullable = false'.
-    @ManyToOne // Define la relación como Muchos a Uno.
-    @JoinColumn(name = "dish_id", nullable = true) // Mapea la clave foránea en la tabla 'menu_items'. 'name = "dish_id"' es el nombre de la columna FK; 'nullable = true' permite que un ítem de menú no tenga una receta asociada.
-    private DishEntity dish; // Referencia a la entidad del plato/receta base asociado. Será nulo si no hay receta base.
+    
+    @Column(nullable = true)// Mapea la clave foránea en la tabla 'menu_items'. 'name = "dish_id"' es el nombre de la columna FK; 'nullable = true' permite que un ítem de menú no tenga una receta asociada.
+    private Long dish_id; // Referencia a la entidad del plato/receta base asociado. Será nulo si no hay receta base.
 
     public MenuItemEntity() {}
 
-    public MenuItemEntity(String name, String description, BigDecimal price, Boolean available, MenuCategoryEntity category, DishEntity dish) {
+    public MenuItemEntity(String name, String description, BigDecimal price, Boolean available, MenuCategoryEntity category, Long dish_id) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.available = available;
         this.category = category; // Asigna la categoría a la que pertenece este ítem.
-        this.dish = dish; // Asigna el plato base (receta) si existe.
+        this.dish_id = dish_id; // Asigna el plato base (receta) si existe.
     }
 
     public Long getId() { return id; }
@@ -92,8 +86,8 @@ public class MenuItemEntity extends BaseEntity implements Serializable {
     public void setAvailable(Boolean available) { this.available = available; }
     public MenuCategoryEntity getCategory() { return category; }
     public void setCategory(MenuCategoryEntity category) { this.category = category; }
-    public DishEntity getDish() { return dish; }
-    public void setDish(DishEntity dish) { this.dish = dish; }
+    public Long getDishId() { return dish_id; }
+    public void setDishId(Long dish_id) { this.dish_id = dish_id; }
 
     @Override
     public boolean equals(Object o) {

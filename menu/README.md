@@ -63,6 +63,10 @@ Este módulo forma parte de un sistema más amplio y tiene como objetivo gestion
 └── 📄 README.md                     # Documentación del módulo menu
 ```
 
+## Modelo relacional
+
+<img src="Menu_RelationModelDB.png" alt="Modelo Relacional SERVICIO MENÚ" width="500"/>
+
 ---
 
 ## **📝 Logging**

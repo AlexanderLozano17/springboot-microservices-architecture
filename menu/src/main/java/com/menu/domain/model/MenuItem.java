@@ -15,20 +15,20 @@ public class MenuItem extends BaseModel implements Serializable {
 	private String description;
 	private BigDecimal price;
 	private Boolean available;
-	private Long menuCategoryId;
-	private MenuCategory menuCategoryDetails;  
+	private Long categoryId;
+	private MenuCategory categoryDetails;  
     
     public MenuItem() {}
     
-	public MenuItem(Long id, String name, String description, BigDecimal price, Boolean available, Long menuCategoryId,
-			MenuCategory menuCategoryDetails, LocalDateTime createdAt, LocalDateTime updatedAt) {
+	public MenuItem(Long id, String name, String description, BigDecimal price, Boolean available, Long categoryId,
+			MenuCategory categoryDetails, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.available = available;
-		this.menuCategoryId = menuCategoryId;
-		this.menuCategoryDetails = menuCategoryDetails;
+		this.categoryId = categoryId;
+		this.categoryDetails = categoryDetails;
 	}
 
     public Long getId() { return id; }
@@ -41,9 +41,9 @@ public class MenuItem extends BaseModel implements Serializable {
     public void setPrice(BigDecimal price) { this.price = price; }
     public Boolean getAvailable() { return available; }
     public void setAvailable(Boolean available) { this.available = available; }
-    public Long getMenuCategoryId() { return menuCategoryId; }
-    public void setMenuCategoryId(Long menuCategoryId) { this.menuCategoryId = menuCategoryId; }
-    public MenuCategory getMenuCategoryDetails() { return menuCategoryDetails; }
-    public void setMenuCategoryDetails(MenuCategory menuCategoryDetails) { this.menuCategoryDetails = menuCategoryDetails; }
+    public Long getCategoryId() { return categoryId; }
+    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+    public MenuCategory getCategoryDetails() { return categoryDetails; }
+    public void setCategoryDetails(MenuCategory categoryDetails) { this.categoryDetails = categoryDetails; }
 }
 

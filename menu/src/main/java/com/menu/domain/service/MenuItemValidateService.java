@@ -21,7 +21,7 @@ public class MenuItemValidateService {
 		dataToValidate.put("name", menuItem.getName());
 		dataToValidate.put("description", menuItem.getDescription());
 		dataToValidate.put("price", menuItem.getPrice());
-		dataToValidate.put("menuCategoryId", menuItem.getMenuCategoryId());
+		dataToValidate.put("menuCategoryId", menuItem.getCategoryId());
 
 		List<String> errors = dataToValidate.entrySet().stream().filter(entry -> {
 			Object value = entry.getValue();

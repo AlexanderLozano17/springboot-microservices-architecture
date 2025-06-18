@@ -13,8 +13,8 @@ public class MenuItemDto {
 	private String description;
 	private BigDecimal price;
 	private Boolean available;
-	private Long menuCategoryId;
-	private MenuCategoryDto menuCategoryDetails;
+	private Long categoryId;
+	private MenuCategoryDto categoryDetails;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
         
@@ -24,8 +24,8 @@ public class MenuItemDto {
 		this.description = builder.description;
 		this.price = builder.price;
 		this.available = builder.available;
-		this.menuCategoryId = builder.menuCategoryId;
-		this.menuCategoryDetails = builder.menuCategoryDetails;
+		this.categoryId = builder.categoryId;
+		this.categoryDetails = builder.categoryDetails;
 		this.createdAt = builder.createdAt;
 		this.updatedAt = builder.updatedAt;
 	}
@@ -43,8 +43,8 @@ public class MenuItemDto {
             .description(this.description)
             .price(this.price)
             .available(this.available)
-            .menuCategoryId(this.menuCategoryId)
-            .menuCategoryDetails(this.menuCategoryDetails)
+            .categoryId(this.categoryId)
+            .categoryDetails(this.categoryDetails)
             .createdAt(this.createdAt)
             .updatedAt(this.updatedAt);
     }
@@ -56,8 +56,8 @@ public class MenuItemDto {
     	private String description;
     	private BigDecimal price;
     	private Boolean available;
-    	private Long menuCategoryId;
-    	private MenuCategoryDto menuCategoryDetails;
+    	private Long categoryId;
+    	private MenuCategoryDto categoryDetails;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         
@@ -86,13 +86,13 @@ public class MenuItemDto {
 			return this;
 		}
 		
-		public Builder menuCategoryId(Long menuCategoryId) {
-			this.menuCategoryId = menuCategoryId;
+		public Builder categoryId(Long categoryId) {
+			this.categoryId = categoryId;
 			return this;
 		}
 		
-		public Builder menuCategoryDetails(MenuCategoryDto menuCategoryDetails) {
-			this.menuCategoryDetails = menuCategoryDetails;
+		public Builder categoryDetails(MenuCategoryDto categoryDetails) {
+			this.categoryDetails = categoryDetails;
 			return this;
 		}
 		
@@ -131,12 +131,12 @@ public class MenuItemDto {
 		return available;
 	}
 
-	public Long getMenuCategoryId() {
-		return menuCategoryId;
+	public Long getcategoryId() {
+		return categoryId;
 	}
 	
-	public MenuCategoryDto getMenuCategoryDetails() {
-		return menuCategoryDetails;
+	public MenuCategoryDto getCategoryDetails() {
+		return categoryDetails;
 	}
 
 	public LocalDateTime getCreatedAt() {

@@ -41,8 +41,8 @@ public class GetMenuItemUseCaseService implements GetMenuItemUseCase {
         return itemOpt.map(item -> {
         	MenuItemDto menuItemDto = mapper.menuItemToMenuItemDto(itemOpt.get());
        	 
-			if (includeCategory && menuItemDto.getMenuCategoryId() != null && menuItemDto.getMenuCategoryId() != null) {				
-				 Long categoryId = menuItemDto.getMenuCategoryId();
+			if (includeCategory && menuItemDto.getcategoryId() != null && menuItemDto.getcategoryId() != null) {				
+				 Long categoryId = menuItemDto.getcategoryId();
 				 
                  Optional<MenuCategory> categoryDtoOpt = categoryPersistencePort.getdById(categoryId);
 
@@ -51,7 +51,7 @@ public class GetMenuItemUseCaseService implements GetMenuItemUseCase {
                 	 MenuCategoryDto categoryDto = categoryMappper.menuCategoryToMenuCategoryDto(categoryDtoOpt.get());               	 
                 	 
                      return menuItemDto.toBuilder() // Obtiene un builder pre-inicializado con los valores de menuItemDto
-                                       .menuCategoryDetails(categoryDto) // Setea el nuevo valor
+                                       .categoryDetails(categoryDto) // Setea el nuevo valor
                                        .build(); // <-- ¡Devuelve la NUEVA instancia modificada!
                  }
 			}
