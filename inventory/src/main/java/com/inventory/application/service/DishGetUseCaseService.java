@@ -5,12 +5,15 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import com.inventory.application.dto.DishDto;
 import com.inventory.application.mapper.DishApplicationMapper;
 import com.inventory.application.spi.DishPersistencePort;
 import com.inventory.application.usecase.DishGetUseCase;
 import com.inventory.domain.model.Dish;
 
+@Service
 public class DishGetUseCaseService implements DishGetUseCase {
 	
 	private final DishPersistencePort dishPersistencePort;

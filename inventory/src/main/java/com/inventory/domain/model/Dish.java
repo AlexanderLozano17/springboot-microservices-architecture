@@ -8,31 +8,31 @@ public class Dish extends BaseModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
-    private String nombre;
-    private String descripcion;
+    private String name;
+    private String description;
 
     public Dish() {}
 
-    public Dish(Long id, String nombre, String descripcion, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Dish(Long id, String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.name = name;
+        this.description = description;
         setCreatedAt(createdAt);
         setUpdatedAt(updatedAt);
     }
 
-    public Dish(String nombre, String descripcion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+    public Dish(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     // --- Getters y Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     @Override
     public boolean equals(Object o) {
@@ -51,8 +51,8 @@ public class Dish extends BaseModel implements Serializable {
     public String toString() {
         return "Dish{" +
                "id=" + id +
-               ", nombre='" + nombre + '\'' +
-               ", descripcion='" + descripcion + '\'' +
+               ", name='" + name + '\'' +
+               ", description='" + description + '\'' +
                ", createdAt=" + getCreatedAt() +
                ", updatedAt=" + getUpdatedAt() +
                '}';

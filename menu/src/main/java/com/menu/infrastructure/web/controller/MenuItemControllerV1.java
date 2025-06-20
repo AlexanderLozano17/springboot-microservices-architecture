@@ -73,10 +73,10 @@ public class MenuItemControllerV1 {
 			MenuItemDto itemDto = createItemOpt.get();
 			
 			EntityModel<MenuItemDto> resource = EntityModel.of(itemDto);
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM).withSelfRel());
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + itemDto.getId()).withRel("item"));
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + itemDto.getId() + "?includeCategory=true").withRel("item-with-category"));
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM).withRel("collections-item"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM).withSelfRel().withType("POST"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + itemDto.getId()).withRel("item").withType("GET"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + itemDto.getId() + "?includeCategory=true").withRel("item-with-category").withType("GET"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM).withRel("collections-item").withType("GET"));
 			
 			return ResponseEntity.status(HttpStatus.CREATED).body(EntityModel.of(CommonApiResponse.success(resource)));
 		}
@@ -112,9 +112,9 @@ public class MenuItemControllerV1 {
 			MenuItemDto itemDto = itemOpt.get();
 			
 			EntityModel<MenuItemDto> resource = EntityModel.of(itemDto);
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + id).withSelfRel());
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + id + "?includeCategory=true").withRel("item-with-category"));
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM).withRel("collections-item"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + id).withSelfRel().withType("GET"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + id + "?includeCategory=true").withRel("item-with-category").withType("GET"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_ITEM).withRel("collections-item").withType("GET"));
 			
 			return ResponseEntity.ok(EntityModel.of(CommonApiResponse.success(resource)));
 		}
@@ -140,9 +140,9 @@ public class MenuItemControllerV1 {
 		if (!listItem.isEmpty()) {			
 			
 			CollectionModel<MenuItemDto> collectionModel = CollectionModel.of(listItem);
-			collectionModel.add(Link.of(ApiVersionPaths.V1_MENU_ITEM ).withSelfRel());
-			collectionModel.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + 1).withRel("item"));			
-			collectionModel.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/1?includeCategory=true").withRel("item-with-category"));
+			collectionModel.add(Link.of(ApiVersionPaths.V1_MENU_ITEM ).withSelfRel().withType("GET"));
+			collectionModel.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/" + 1).withRel("item").withType("GET"));			
+			collectionModel.add(Link.of(ApiVersionPaths.V1_MENU_ITEM + "/1?includeCategory=true").withRel("item-with-category").withType("GET"));
 
 			
 			return ResponseEntity.ok(CommonApiResponse.success(collectionModel));

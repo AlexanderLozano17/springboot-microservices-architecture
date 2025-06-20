@@ -40,4 +40,11 @@ public interface DishPersistencePort {
 	 * @return
 	 */
 	boolean delete(Long id);
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean softDeleteById(Long id);
 }

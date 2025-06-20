@@ -68,8 +68,8 @@ public class MenuCategoryControllerV1 {
 			MenuCategoryDto categoryDto = createdCategoryOpt.get();
 
 			EntityModel<MenuCategoryDto> resource = EntityModel.of(categoryDto);
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_CATEGORIA).withSelfRel());
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_CATEGORIA + "/1").withRel("one-categories"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_CATEGORIA).withSelfRel().withType("POST"));
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_CATEGORIA + "/1").withRel("one-categories").withType("GET"));
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(EntityModel.of(CommonApiResponse.success(resource)));
 		} 
@@ -97,7 +97,7 @@ public class MenuCategoryControllerV1 {
 			MenuCategoryDto categoryDto = entityOpt.get();
 
 			EntityModel<MenuCategoryDto> resource = EntityModel.of(categoryDto);
-			resource.add(Link.of(ApiVersionPaths.V1_MENU_CATEGORIA + "/" +id).withSelfRel());
+			resource.add(Link.of(ApiVersionPaths.V1_MENU_CATEGORIA + "/" +id).withSelfRel().withType("GET"));
 
 			return ResponseEntity.ok(EntityModel.of(CommonApiResponse.success(resource)));
 		} 

@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Repository;
+
 import com.inventory.application.spi.DishPersistencePort;
 import com.inventory.domain.model.Dish;
 import com.inventory.infrastructure.mapper.DishWebMapper;
 import com.inventory.infrastructure.persistence.entity.DishEntity;
 import com.inventory.infrastructure.persistence.repository.DishJpaRepository;
 
+@Repository
 public class DishPersistenAdapter implements DishPersistencePort {
 	
 	private final DishJpaRepository dishJpaRepository;
@@ -54,6 +57,19 @@ public class DishPersistenAdapter implements DishPersistencePort {
 			return true;
 		}
 		return false;		
+	}
+
+	@Override
+	public boolean softDeleteById(Long id) {
+		
+		Optional<DishEntity> dishEntity = dishJpaRepository.findById(id);		
+		if (dishEntity.isPresent()) {
+			DishEntity entity = dishEntity.get();
+			entity.softDelete(entity);
+			dishJpaRepository.save(entity);
+			return true;
+		}
+		return false;	
 	}
 
 }

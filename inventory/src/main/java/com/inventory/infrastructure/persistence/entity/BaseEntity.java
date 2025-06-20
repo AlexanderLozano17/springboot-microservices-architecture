@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,18 +77,11 @@ public abstract class BaseEntity implements Serializable {
 	public void onUpdate() {
 		this.updatedAt = LocalDateTime.now();
 	}
-
-	/**
-	 * Método que se ejecuta antes de eliminar la entidad. Realiza un "soft delete"
-	 * estableciendo el campo `isDeleted` a `true` y registrando la fecha de
-	 * eliminación.
-	 */
-	@PreRemove
-	public void onRemove() {
-		// Marca la entidad como eliminada lógicamente
-		this.isDeleted = true;
-
-		// Establece la fecha y hora de eliminación
-		this.deletedAt = LocalDateTime.now();
+	
+	public void softDelete(BaseEntity entity) {
+		entity.setDeletedAt(LocalDateTime.now());
+		entity.setUpdatedAt(LocalDateTime.now());
+		entity.setIsDeleted(true);
 	}
+
 }

@@ -2,19 +2,20 @@ package com.inventory.infrastructure.web.model.request;
 
 import java.time.LocalDateTime;
 
-public class BaseModelRequest {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
-	private LocalDateTime deletedAt;
-	private Boolean isDeleted = false;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+public abstract class BaseModelRequest {
 	
-	public LocalDateTime getCreatedAt() { return createdAt;	}
-	public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt;	}
-	public LocalDateTime getUpdatedAt() { return updatedAt;	}
-	public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt;	}
-	public LocalDateTime getDeletedAt() { return deletedAt;	}
-	public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt;	}
-	public Boolean getIsDeleted() { return isDeleted; }
-	public void setIsDeleted(Boolean isDeleted) { this.isDeleted = isDeleted; }
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
+    private Boolean isDeleted = false;
 }
