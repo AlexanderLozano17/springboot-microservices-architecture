@@ -4,18 +4,27 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import org.springframework.stereotype.Indexed;
+
+import com.inventory.utils.UnitOfMeasure;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Table(name = "product", indexes = {@Index(name = "IDX_PRODUCT_NAME", columnList = "name, storageLocation")})
+@Entity
 public class ProductEntity extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;

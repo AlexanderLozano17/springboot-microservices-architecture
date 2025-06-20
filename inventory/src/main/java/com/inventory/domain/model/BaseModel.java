@@ -1,13 +1,17 @@
 package com.inventory.domain.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class BaseModel {
+public abstract class BaseModel implements Serializable {
 
+	private static final long serialVersionUID = 1L;	
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private LocalDateTime deletedAt;
 	private Boolean isDeleted = false;
+	
+	BaseModel() {}
 	
 	public LocalDateTime getCreatedAt() { return createdAt;	}
 	public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt;	}

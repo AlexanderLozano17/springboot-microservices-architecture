@@ -1,4 +1,4 @@
-package com.menu.infrastructure.configuration;
+package com.inventory.infrastructure.configutarion;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -11,8 +11,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Menu Consultation API")
-                        .description("API for consulting Menu")
+                .info(new Info().title("Inventory Consultation API")
+                        .description("API for consulting Inventory")
                         .version("1.0"));
     }
 }

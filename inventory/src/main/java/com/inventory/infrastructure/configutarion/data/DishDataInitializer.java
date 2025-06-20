@@ -29,12 +29,8 @@ public class DishDataInitializer {
             LOGGER.info("No se encontraron platos. Inicializando con datos por defecto.");
 
             try {
-                List<DishEntity> dishes = List.of(
-                    new DishEntity("Ajiaco Santafereño", "Sopa tradicional colombiana con tres tipos de papa y pollo."),
-                    new DishEntity("Lomo Salteado Base", "Preparación base de lomo salteado con verduras."),
-                    new DishEntity("Limonada Natural", "Bebida refrescante a base de limón y azúcar."),
-                    new DishEntity("Arroz Blanco Simple", "Cocción básica de arroz blanco.")                    
-                );
+                 
+            	List<DishEntity> dishes = getDish();
 
                 dishJpaRepository.saveAll(dishes);
                 LOGGER.info("Datos de platos inicializados exitosamente. Se insertaron {} platos.", dishes.size());
@@ -46,5 +42,14 @@ public class DishDataInitializer {
             LOGGER.info("Ya existen platos en la base de datos. No se requiere inicialización.");
         }
         LOGGER.info("Finalizada la verificación e inicialización de datos de platos.");
+    }
+    
+    public static List<DishEntity> getDish() {
+    	return List.of(
+            new DishEntity("Ajiaco Santafereño", "Sopa tradicional colombiana con tres tipos de papa y pollo."),
+            new DishEntity("Lomo Salteado Base", "Preparación base de lomo salteado con verduras."),
+            new DishEntity("Limonada Natural", "Bebida refrescante a base de limón y azúcar."),
+            new DishEntity("Arroz Blanco Simple", "Cocción básica de arroz blanco.")                    
+        );
     }
 }

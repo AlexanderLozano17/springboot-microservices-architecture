@@ -1,4 +1,4 @@
-package com.inventory.infrastructure.persistence.entity;
+package com.inventory.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

@@ -1,0 +1,1 @@
+package com.inventory.infrastructure.web.controller.version;
